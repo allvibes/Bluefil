@@ -1,3 +1,42 @@
+# 🫐 Bluefil – Product Landing Page
+
+A beautifully animated product landing page for **Bluefil**, the futuristic blueberry drink. Built with **Next.js**, **GSAP**, and **TailwindCSS** for immersive scroll-triggered animations and stunning visual effects including bioluminescence.
+
+## 🌟 Features
+
+- 🧃 Scroll-based bottle entrance and transitions
+- 🌌 Bioluminescent glow effects using SVG and blend modes
+- 🚀 GSAP-powered animations: reveal, zoom, float, bounce
+- 💙 Responsive design with Tailwind CSS
+- 🛒 Sticky Navbar with Buy Now CTA and icons
+
+## 🧰 Tech Stack
+
+- Next.js (App Router)
+- GSAP + ScrollTrigger
+- Tailwind CSS
+- React Icons
+- Framer Motion (optional)
+
+## 📸 Preview
+
+[![Bluefil Preview](./public/images/screenshot.jpg)](https://bluefil.vercel.app)
+
+## 🛠 Installation
+
+```bash
+git clone https://github.com/yourusername/bluefil.git
+cd bluefil
+npm install
+npm run dev
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
