@@ -1,5 +1,5 @@
 
-# 🫐 Bluefil – Product Landing Page
+#  Bluefil – Product Landing Page
 
 A beautifully animated product landing page for **Bluefil**, the futuristic blueberry drink. Built with **Next.js**, **GSAP**, and **TailwindCSS** for immersive scroll-triggered animations and stunning visual effects including bioluminescence.
 

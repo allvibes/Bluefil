@@ -8,11 +8,11 @@ import Image from 'next/image'
 gsap.registerPlugin(ScrollTrigger)
 
 const benefits = [
-  { title: 'Brain Boost', text: 'Enhances memory and cognitive performance.', icon: '/images/brain.webp' },
-  { title: 'Immunity', text: 'Packed with Vitamin C for defense.', icon: '/images/immunity.webp' },
-  { title: 'Digestive Aid', text: 'High fiber for gut health.', icon: '/images/digestion.webp' },
-  { title: 'Skin Glow', text: 'Antioxidants improve skin tone.', icon: '/images/skin.webp' },
-  { title: 'Heart Health', text: 'Supports healthy blood pressure.', icon: '/images/heart.webp' },
+  { title: 'Brain Boost', icon: '/images/brain.webp' },
+  { title: 'Immunity', icon: '/images/immunity.webp' },
+  { title: 'Digestive Aid', icon: '/images/digestion.webp' },
+  { title: 'Skin Glow', icon: '/images/skin.webp' },
+  { title: 'Heart Health', icon: '/images/heart.webp' },
 ]
 
 export default function Benefits() {
@@ -23,7 +23,6 @@ export default function Benefits() {
   useEffect(() => {
     if (!sectionRef.current || !bottleRef.current) return
 
-    // Bottle zoom out on scroll (scrub true)
     gsap.fromTo(bottleRef.current,
       { scale: 1 },
       {
@@ -37,7 +36,6 @@ export default function Benefits() {
       }
     )
 
-    // Icons + bottle opacity animation on entry only
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -77,8 +75,8 @@ export default function Benefits() {
           />
         </div>
 
-        {/* Icon Group Centered */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[750px] h-[650px] pointer-events-none z-0">
+        {/* Icon Group Centered with more vertical space */}
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[750px] h-[800px] pointer-events-none z-0">
           {benefits.map((benefit, i) => {
             let x = 0
             let y = 0
@@ -86,7 +84,7 @@ export default function Benefits() {
             const sidePadding = 220
             const upperY = 80
             const bottomCurve = 200
-            const heartY = 280 // Adjusted from 300 to 280
+            const heartY = 270  // Slightly lowered for better visibility
 
             switch (i) {
               case 0:
@@ -131,7 +129,6 @@ export default function Benefits() {
                   className="mx-auto mb-2"
                 />
                 <h4 className="text-base font-semibold text-white">{benefit.title}</h4>
-                <p className="text-sm text-gray-300 mt-1">{benefit.text}</p> {/* Ensure description is shown */}
               </div>
             )
           })}
@@ -140,6 +137,3 @@ export default function Benefits() {
     </section>
   )
 }
-
-
-
