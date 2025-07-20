@@ -12,7 +12,7 @@ export default function Hero() {
   const bottleWrapperRef = useRef<HTMLDivElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]) // ✅ FIXED
+  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]) // ✅ Correct type
   const paragraphRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export default function Hero() {
           {"Bluefil".split("").map((letter, i) => (
             <span
               key={i}
-              ref={(el) => { lettersRef.current[i] = el }} // ✅ FIXED
+              ref={(el) => { lettersRef.current[i] = el }} // ✅ Safe ref assignment with void return
               className="inline-block"
             >
               {letter}
