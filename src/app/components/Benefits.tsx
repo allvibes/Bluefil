@@ -18,8 +18,9 @@ const benefits = [
 export default function Benefits() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const bottleRef = useRef<HTMLDivElement>(null)
-  const desktopIconsRef = useRef<HTMLDivElement[]>([])
-  const mobileIconsRef = useRef<HTMLDivElement[]>([])
+  const desktopIconsRef = useRef<(HTMLDivElement | null)[]>([]) // ✅ FIXED
+  const mobileIconsRef = useRef<(HTMLDivElement | null)[]>([])
+
   const mm = useRef<gsap.MatchMedia | null>(null)
 
   useEffect(() => {
@@ -33,7 +34,6 @@ export default function Benefits() {
     }, (context) => {
       const { isDesktop, isMobile } = context.conditions!
 
-      // Bottle Animation (Shared)
       gsap.fromTo(bottleRef.current,
         { scale: 1 },
         {
@@ -47,7 +47,6 @@ export default function Benefits() {
         }
       )
 
-      // Desktop Animations
       if (isDesktop) {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -72,7 +71,6 @@ export default function Benefits() {
         }, 0)
       }
 
-      // Mobile: Clear animations safely (no distortion)
       if (isMobile) {
         gsap.set(mobileIconsRef.current, { clearProps: "all" })
       }
@@ -88,7 +86,6 @@ export default function Benefits() {
     <section ref={sectionRef} className="min-h-screen relative bg-black py-20 overflow-hidden">
       <div className="flex flex-col items-center justify-center relative h-full">
 
-        {/* Bottle */}
         <div ref={bottleRef} className="relative z-10 mb-10">
           <Image
             src="/images/bottle.webp"
@@ -100,13 +97,11 @@ export default function Benefits() {
           />
         </div>
 
-        {/* Mobile Benefits */}
         <div className="md:hidden flex flex-col items-center justify-center space-y-6 z-10">
           {benefits.map((benefit, i) => (
             <div
               key={i}
-             ref={(el) => { mobileIconsRef.current[i] = el! }}
-
+              ref={(el) => { mobileIconsRef.current[i] = el }} // ✅ Safe
               className="flex flex-col items-center text-center"
             >
               <Image
@@ -121,7 +116,6 @@ export default function Benefits() {
           ))}
         </div>
 
-        {/* Desktop Benefits */}
         <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[750px] h-[800px] pointer-events-none z-0">
           {benefits.map((benefit, i) => {
             let x = 0
@@ -133,32 +127,17 @@ export default function Benefits() {
             const heartY = 270
 
             switch (i) {
-              case 0:
-                x = -sidePadding
-                y = upperY
-                break
-              case 1:
-                x = sidePadding
-                y = upperY
-                break
-              case 2:
-                x = -sidePadding + 50
-                y = bottomCurve
-                break
-              case 3:
-                x = sidePadding - 50
-                y = bottomCurve
-                break
-              case 4:
-                x = 0
-                y = heartY
-                break
+              case 0: x = -sidePadding; y = upperY; break
+              case 1: x = sidePadding; y = upperY; break
+              case 2: x = -sidePadding + 50; y = bottomCurve; break
+              case 3: x = sidePadding - 50; y = bottomCurve; break
+              case 4: x = 0; y = heartY; break
             }
 
             return (
               <div
                 key={i}
-                ref={(el) => (desktopIconsRef.current[i] = el!)}
+                ref={(el) => { desktopIconsRef.current[i] = el }} // ✅ Safe
                 style={{
                   position: 'absolute',
                   left: `calc(50% + ${x}px)`,

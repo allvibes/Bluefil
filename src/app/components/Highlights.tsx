@@ -1,5 +1,3 @@
-
-
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
@@ -19,7 +17,7 @@ const highlights = [
 export default function Highlights() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const handRef = useRef<HTMLDivElement>(null)
-  const itemsRef = useRef<HTMLDivElement[]>([])
+  const itemsRef = useRef<(HTMLDivElement | null)[]>([]) // ✅ FIXED HERE
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -63,10 +61,7 @@ export default function Highlights() {
     <section ref={sectionRef} className="min-h-screen bg-black py-20 px-8 flex flex-col md:flex-row items-center justify-between relative overflow-hidden">
 
       {isMobile ? (
-        // Mobile: Hand first, then stacked highlights
         <div className="flex flex-col items-center space-y-10 w-full">
-
-          {/* Hand Image */}
           <div ref={handRef} className="w-full flex justify-center">
             <Image
               src="/images/hand-catch.webp"
@@ -77,12 +72,11 @@ export default function Highlights() {
             />
           </div>
 
-          {/* Highlights List */}
           <div className="flex flex-col items-center space-y-6 w-full">
             {highlights.map((item, i) => (
               <div
                 key={i}
-                ref={(el) => (itemsRef.current[i] = el!)}
+                ref={(el) => { itemsRef.current[i] = el }} // ✅ FIXED
                 className="flex items-center gap-4 w-full max-w-xs"
               >
                 <Image
@@ -99,42 +93,25 @@ export default function Highlights() {
               </div>
             ))}
           </div>
-
         </div>
-
       ) : (
-        // Desktop Layout
         <>
-          {/* Left Highlights in C Shape */}
           <div className="md:w-1/2 relative h-[500px] w-full md:w-[400px] ml-20 pl-16">
-
             {highlights.map((item, i) => {
               let x = 0
               let y = 0
 
               switch (i) {
-                case 0:
-                  x = -50
-                  y = -150
-                  break
-                case 1:
-                  x = -170
-                  y = -50
-                  break
-                case 2:
-                  x = -170
-                  y = 80
-                  break
-                case 3:
-                  x = -50
-                  y = 180
-                  break
+                case 0: x = -50; y = -150; break
+                case 1: x = -170; y = -50; break
+                case 2: x = -170; y = 80; break
+                case 3: x = -50; y = 180; break
               }
 
               return (
                 <div
                   key={i}
-                  ref={(el) => (itemsRef.current[i] = el!)}
+                  ref={(el) => { itemsRef.current[i] = el }} // ✅ FIXED
                   style={{
                     position: 'absolute',
                     left: `calc(50% + ${x}px)`,
@@ -161,7 +138,6 @@ export default function Highlights() {
             })}
           </div>
 
-          {/* Right Hand Image */}
           <div ref={handRef} className="md:w-1/2 mt-12 md:mt-0 flex justify-end pr-0">
             <Image
               src="/images/hand-catch.webp"
@@ -173,7 +149,8 @@ export default function Highlights() {
           </div>
         </>
       )}
-
     </section>
   )
 }
+
+
