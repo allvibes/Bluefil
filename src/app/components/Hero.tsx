@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useEffect, useRef } from 'react'
@@ -12,7 +11,7 @@ export default function Hero() {
   const bottleWrapperRef = useRef<HTMLDivElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]) // 
+  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]) // ✅ Handles null safely
   const paragraphRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
@@ -90,7 +89,7 @@ export default function Hero() {
           {"Bluefil".split("").map((letter, i) => (
             <span
               key={i}
-              ref={(el) => { lettersRef.current[i] = el }} 
+              ref={(el) => { lettersRef.current[i] = el }} // ✅ SAFE AND DEPLOYABLE
               className="inline-block"
             >
               {letter}
