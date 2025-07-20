@@ -1,6 +1,6 @@
 'use client'
 
-import Image from 'next/image'
+
 import { FaInstagram, FaLinkedin, FaXTwitter, FaTiktok, FaFacebookF } from 'react-icons/fa6'
 
 const footerLinks = [
