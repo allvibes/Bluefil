@@ -11,7 +11,7 @@ export default function Hero() {
   const bottleWrapperRef = useRef<HTMLDivElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]) // ✅ Handles null safely
+  const lettersRef = useRef<(HTMLSpanElement | null)[]>([])
   const paragraphRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
@@ -81,7 +81,10 @@ export default function Hero() {
 
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute w-[500px] h-[500px] bg-blue-400/30 rounded-full blur-[150px] top-1/4 left-1/3 mix-blend-screen animate-pulse-slow"></div>
-        <div className="absolute w-[400px] h-[400px] bg-indigo-500/20 rounded-full blur-[120px] top-1/2 left-2/3 mix-blend-screen animate-pulse-slow" style={{ animationDelay: '0.2s' }}></div>
+        <div
+          className="absolute w-[400px] h-[400px] bg-indigo-500/20 rounded-full blur-[120px] top-1/2 left-2/3 mix-blend-screen animate-pulse-slow"
+          style={{ animationDelay: '0.2s' }}
+        ></div>
       </div>
 
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center mt-20 md:mt-32">
@@ -89,7 +92,7 @@ export default function Hero() {
           {"Bluefil".split("").map((letter, i) => (
             <span
               key={i}
-              ref={(el) => { lettersRef.current[i] = el }} // ✅ SAFE AND DEPLOYABLE
+              ref={(el) => { lettersRef.current[i] = el }} // ✅ FIXED: Safe ref assignment
               className="inline-block"
             >
               {letter}
