@@ -89,15 +89,18 @@ export default function Hero() {
 
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center mt-20 md:mt-32">
         <h1 className="font-extrabold text-white drop-shadow-[0_0_10px_rgba(59,130,246,0.7)] text-[15vw] leading-none flex gap-2">
-          {"Bluefil".split("").map((letter, i) => (
-            <span
-              key={i}
-              ref={(el) => { lettersRef.current[i] = el }} // ✅ FIXED: Safe ref assignment
-              className="inline-block"
-            >
-              {letter}
-            </span>
-          ))}
+          {(() => {
+            lettersRef.current = [] // Reset array to avoid stale refs on rerender
+            return "Bluefil".split("").map((letter, i) => (
+              <span
+                key={i}
+                ref={(el) => { lettersRef.current[i] = el }} // ✅ Properly typed, no error
+                className="inline-block"
+              >
+                {letter}
+              </span>
+            ))
+          })()}
         </h1>
         <p
           ref={paragraphRef}
