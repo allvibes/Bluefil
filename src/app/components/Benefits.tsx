@@ -105,7 +105,8 @@ export default function Benefits() {
           {benefits.map((benefit, i) => (
             <div
               key={i}
-              ref={(el) => (mobileIconsRef.current[i] = el!)}
+             ref={(el) => { mobileIconsRef.current[i] = el! }}
+
               className="flex flex-col items-center text-center"
             >
               <Image
