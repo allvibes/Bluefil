@@ -12,13 +12,12 @@ export default function Hero() {
   const bottleWrapperRef = useRef<HTMLDivElement>(null)
   const bgRef = useRef<HTMLDivElement>(null)
   const sectionRef = useRef<HTMLDivElement>(null)
-  const lettersRef = useRef<HTMLSpanElement[]>([])
+  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]) // ✅ FIXED
   const paragraphRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
     if (!bottleWrapperRef.current || !sectionRef.current || !bgRef.current) return
 
-    // Bottle entry
     gsap.fromTo(
       bottleWrapperRef.current,
       { y: '100vh', opacity: 0 },
@@ -31,7 +30,6 @@ export default function Hero() {
       }
     )
 
-    // Bottle scroll migration
     gsap.to(bottleWrapperRef.current, {
       y: '-40vh',
       scale: 0.8,
@@ -43,7 +41,6 @@ export default function Hero() {
       },
     })
 
-    // Background fade out
     gsap.to(bgRef.current, {
       opacity: 0,
       scrollTrigger: {
@@ -54,7 +51,6 @@ export default function Hero() {
       },
     })
 
-    // Letters stagger reveal
     gsap.from(lettersRef.current, {
       y: 80,
       opacity: 0,
@@ -64,7 +60,6 @@ export default function Hero() {
       delay: 1,
     })
 
-    // Paragraph scroll in
     gsap.from(paragraphRef.current, {
       y: -50,
       opacity: 0,
@@ -79,27 +74,23 @@ export default function Hero() {
       ref={sectionRef}
       className="relative h-screen w-full overflow-hidden bg-black"
     >
-      {/* Background */}
       <div
         ref={bgRef}
         className="absolute inset-0 bg-cover bg-center brightness-75"
         style={{ backgroundImage: `url('/images/blueberry-bg.webp')` }}
       />
 
-      {/* Bioluminescent Glow */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute w-[500px] h-[500px] bg-blue-400/30 rounded-full blur-[150px] top-1/4 left-1/3 mix-blend-screen animate-pulse-slow"></div>
         <div className="absolute w-[400px] h-[400px] bg-indigo-500/20 rounded-full blur-[120px] top-1/2 left-2/3 mix-blend-screen animate-pulse-slow" style={{ animationDelay: '0.2s' }}></div>
       </div>
 
-      {/* Center Title & Paragraph */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-center mt-20 md:mt-32">
-
         <h1 className="font-extrabold text-white drop-shadow-[0_0_10px_rgba(59,130,246,0.7)] text-[15vw] leading-none flex gap-2">
           {"Bluefil".split("").map((letter, i) => (
             <span
               key={i}
-              ref={(el) => (lettersRef.current[i] = el!)}
+              ref={(el) => { lettersRef.current[i] = el }} // ✅ FIXED
               className="inline-block"
             >
               {letter}
@@ -114,7 +105,6 @@ export default function Hero() {
         </p>
       </div>
 
-      {/* Bottle */}
       <div
         ref={bottleWrapperRef}
         className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-20"
@@ -131,5 +121,3 @@ export default function Hero() {
     </section>
   )
 }
-
-
