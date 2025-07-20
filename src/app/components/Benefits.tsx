@@ -18,53 +18,78 @@ const benefits = [
 export default function Benefits() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const bottleRef = useRef<HTMLDivElement>(null)
-  const iconsRef = useRef<HTMLDivElement[]>([])
+  const desktopIconsRef = useRef<HTMLDivElement[]>([])
+  const mobileIconsRef = useRef<HTMLDivElement[]>([])
+  const mm = useRef<gsap.MatchMedia | null>(null)
 
   useEffect(() => {
     if (!sectionRef.current || !bottleRef.current) return
 
-    gsap.fromTo(bottleRef.current,
-      { scale: 1 },
-      {
-        scale: 0.9,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top center',
-          end: 'bottom center',
-          scrub: true,
-        },
-      }
-    )
+    mm.current = gsap.matchMedia()
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top center+=50',
-        toggleActions: 'play none none reverse',
-      },
+    mm.current.add({
+      isDesktop: "(min-width: 769px)",
+      isMobile: "(max-width: 768px)"
+    }, (context) => {
+      const { isDesktop, isMobile } = context.conditions!
+
+      // Bottle Animation (Shared)
+      gsap.fromTo(bottleRef.current,
+        { scale: 1 },
+        {
+          scale: 0.9,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top center',
+            end: 'bottom center',
+            scrub: true,
+          },
+        }
+      )
+
+      // Desktop Animations
+      if (isDesktop) {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top center+=50',
+            toggleActions: 'play none none reverse',
+          },
+        })
+
+        tl.fromTo(bottleRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 1, ease: 'power2.out' },
+          0
+        )
+
+        tl.from(desktopIconsRef.current, {
+          scale: 0,
+          opacity: 0,
+          stagger: 0.3,
+          duration: 1,
+          ease: 'back.out(1.7)',
+        }, 0)
+      }
+
+      // Mobile: Clear animations safely (no distortion)
+      if (isMobile) {
+        gsap.set(mobileIconsRef.current, { clearProps: "all" })
+      }
+
     })
 
-    tl.fromTo(bottleRef.current, 
-      { opacity: 0 }, 
-      { opacity: 1, duration: 1, ease: 'power2.out' }, 
-      0
-    )
-
-    tl.from(iconsRef.current, {
-      scale: 0,
-      opacity: 0,
-      stagger: 0.3,
-      duration: 1,
-      ease: 'back.out(1.7)',
-    }, 0)
+    return () => {
+      mm.current?.revert()
+    }
   }, [])
 
   return (
     <section ref={sectionRef} className="min-h-screen relative bg-black py-20 overflow-hidden">
-      <div className="flex justify-center items-center relative h-full">
+      <div className="flex flex-col items-center justify-center relative h-full">
 
         {/* Bottle */}
-        <div ref={bottleRef} className="relative z-10">
+        <div ref={bottleRef} className="relative z-10 mb-10">
           <Image
             src="/images/bottle.webp"
             alt="Bluefil Bottle"
@@ -75,8 +100,28 @@ export default function Benefits() {
           />
         </div>
 
-        {/* Icon Group Centered with more vertical space */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[750px] h-[800px] pointer-events-none z-0">
+        {/* Mobile Benefits */}
+        <div className="md:hidden flex flex-col items-center justify-center space-y-6 z-10">
+          {benefits.map((benefit, i) => (
+            <div
+              key={i}
+              ref={(el) => (mobileIconsRef.current[i] = el!)}
+              className="flex flex-col items-center text-center"
+            >
+              <Image
+                src={benefit.icon}
+                alt={benefit.title}
+                width={65}
+                height={65}
+                className="mb-2"
+              />
+              <h4 className="text-base font-semibold text-white">{benefit.title}</h4>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop Benefits */}
+        <div className="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[750px] h-[800px] pointer-events-none z-0">
           {benefits.map((benefit, i) => {
             let x = 0
             let y = 0
@@ -84,7 +129,7 @@ export default function Benefits() {
             const sidePadding = 220
             const upperY = 80
             const bottomCurve = 200
-            const heartY = 270  // Slightly lowered for better visibility
+            const heartY = 270
 
             switch (i) {
               case 0:
@@ -112,7 +157,7 @@ export default function Benefits() {
             return (
               <div
                 key={i}
-                ref={(el) => (iconsRef.current[i] = el!)}
+                ref={(el) => (desktopIconsRef.current[i] = el!)}
                 style={{
                   position: 'absolute',
                   left: `calc(50% + ${x}px)`,
@@ -133,6 +178,7 @@ export default function Benefits() {
             )
           })}
         </div>
+
       </div>
     </section>
   )

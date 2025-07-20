@@ -6,6 +6,17 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        // Standard breakpoints (explicitly defined for clarity and control)
+        'sm': '640px',   // Small devices (mobile landscape, phablets)
+        'md': '768px',   // Medium devices (tablets)
+        'lg': '1024px',  // Large devices (small laptops, desktops)
+        'xl': '1280px',  // Extra large desktops
+        '2xl': '1536px', // Ultra-wide desktops
+
+        // Optional: Custom micro-breakpoint (useful for ultra small screens if needed)
+        // 'xs': '375px',
+      },
       animation: {
         'pulse-slow': 'pulse-slow 4s ease-in-out infinite',
       },
@@ -16,7 +27,7 @@ module.exports = {
         },
       },
       colors: {
-        'bluefil': '#3b82f6', // optional custom brand color
+        'bluefil': '#3b82f6', // Brand color for Bluefil
       }
     },
   },
