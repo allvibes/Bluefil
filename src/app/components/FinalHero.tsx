@@ -2,12 +2,13 @@
 
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import Image from 'next/image'
 
 export default function FinalHero() {
-  const bottleRef = useRef(null)
+  const imgRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
-    gsap.to(bottleRef.current, {
+    gsap.to(imgRef.current, {
       y: -10,
       repeat: -1,
       yoyo: true,
@@ -32,17 +33,20 @@ export default function FinalHero() {
         </button>
       </div>
 
-      {/* Bottle Container with Fade at Bottom */}
+      {/* Bottle Container with Stationary Gradient */}
       <div className="absolute bottom-0 w-full flex justify-center h-[200px] md:h-[290px] overflow-hidden pointer-events-none z-0">
         <div className="relative w-[150px] md:w-[200px]">
-          <img
-            ref={bottleRef}
+          <Image
             src="/images/bottle-in-ice.webp"
-            className="w-full object-contain mx-auto"
             alt="Chilled Bluefil"
+            className="w-full object-contain mx-auto"
+            width={200}
+            height={290}
+            priority
+            ref={imgRef}
           />
-          {/* Gradient Fade Mask */}
-          <div className="absolute bottom-0 left-0 w-full h-22 bg-gradient-to-t from-black/90 to-transparent"></div>
+          {/* Stationary Black Gradient */}
+          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black/90 to-transparent pointer-events-none"></div>
         </div>
       </div>
 
