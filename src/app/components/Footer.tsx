@@ -1,7 +1,13 @@
 'use client'
 
-
-import { FaInstagram, FaLinkedin, FaXTwitter, FaTiktok, FaFacebookF } from 'react-icons/fa6'
+import Container from './Container'
+import {
+  FaInstagram,
+  FaLinkedin,
+  FaXTwitter,
+  FaTiktok,
+  FaFacebookF
+} from 'react-icons/fa6'
 
 const footerLinks = [
   {
@@ -24,33 +30,47 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-white py-16 px-6">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-10">
-        {footerLinks.map((section, i) => (
-          <div key={i}>
-            <h4 className="text-lg font-bold mb-4">{section.title}</h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              {section.links.map((link, idx) => (
-                <li key={idx} className="hover:text-white cursor-pointer transition-colors">{link}</li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
+    <footer className="bg-black text-white py-16">
 
-      {/* Bottom */}
-      <div className="mt-12 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} Bluefil. All rights reserved.</p>
-        
-        {/* Socials */}
-        <div className="flex gap-4 text-lg text-gray-400">
-          <FaInstagram className="hover:text-white cursor-pointer transition-colors" />
-          <FaTiktok className="hover:text-white cursor-pointer transition-colors" />
-          <FaXTwitter className="hover:text-white cursor-pointer transition-colors" />
-          <FaFacebookF className="hover:text-white cursor-pointer transition-colors" />
-          <FaLinkedin className="hover:text-white cursor-pointer transition-colors" />
+      <Container>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
+
+          {footerLinks.map((section, i) => (
+            <div key={i}>
+              <h4 className="font-bold mb-4">{section.title}</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                {section.links.map((link, idx) => (
+                  <li key={idx} className="hover:text-white cursor-pointer">
+                    {link}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
         </div>
-      </div>
+
+        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+
+          <p className="text-gray-500 text-sm">
+            © {new Date().getFullYear()} Bluefil. All rights reserved.
+          </p>
+
+          <div className="flex gap-4 mt-4 md:mt-0 text-gray-400">
+
+            <FaInstagram className="hover:text-white cursor-pointer"/>
+            <FaTiktok className="hover:text-white cursor-pointer"/>
+            <FaXTwitter className="hover:text-white cursor-pointer"/>
+            <FaFacebookF className="hover:text-white cursor-pointer"/>
+            <FaLinkedin className="hover:text-white cursor-pointer"/>
+
+          </div>
+
+        </div>
+
+      </Container>
+
     </footer>
   )
 }

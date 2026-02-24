@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white overflow-x-hidden">
+      <body className="w-full bg-black text-white overflow-x-hidden">
         <div id="__bluefil-wrapper">
           <Navbar />
           {children}
